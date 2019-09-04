@@ -10,10 +10,11 @@ split = int(dataCount/threadCount)
 paintingList = {}
 startIdx = 1
 c = 1
-lock = th.Lock()
-f = open('list.txt', 'w')
+lockForCounter = th.Lock()
+lockForWrite = th.Lock()
 
 def getLinks(startIndex, split):
+    global c
     for idx in range(startIndex, startIndex + split):
         try: 
             response = r.get(apiLink + 'objects/' + str(objectIDs[idx]))
@@ -21,31 +22,31 @@ def getLinks(startIndex, split):
             importance = response.json()['isHighlight']
             if link and importance:
                 print('Added {0} to list'.format(objectIDs[idx]))
-                paintingList[objectIDs[idx]] = {
-                    'id' :  objectIDs[idx],
-                    'link': link
-                }
-                writeToFile(json.dumps(paintingList[objectIDs[idx]]))
+                writeToFile(json.dumps({
+                    'id' : objectIDs[idx],
+                    'link' : link   
+                }))
 
         except: 
-            #print('Unable to currently access object {0}'.format(idx))
-            print()
-
+            print('Unable to currently access object {0}'.format(idx))
+            
         finally: 
-            #incrementCounter()
-            print('{0} % \complete'.format(int(c/dataCount)*100))
+            incrementCounter()
+            print('{0} %'.format((c/dataCount)*100) + ' complete')
                
 def incrementCounter():
     global c
-    lock.acquire()
+    lockForCounter.acquire()
     c = c + 1
-    lock.release()
+    lockForCounter.release()
 
-def writeToFile(str):
-    global f 
-    lock.acquire()
-    f.write(str)
-    lock.release
+def writeToFile(str): 
+    lockForWrite.acquire()
+    f = open('list.txt', 'a+')
+    f.write(str + '\n')
+    f.close()
+    print('WRITE SUCCESSFUL \n' + str)
+    lockForWrite.release()
 
 def main():
     global startIdx, split
@@ -58,13 +59,12 @@ def main():
 
     for i, thread in enumerate(threads):
         thread.join()
-    
-    f.write(json.dumps(paintingList))
-    f.close() 
 
 def debug():
-    f.write(json.dumps(paintingList))
-
+    writeToFile(json.dumps(paintingList[123]))
+    for i in range(10000000000):
+        print(i)
+    
 if __name__ == "__main__":
     main() 
     #debug()
