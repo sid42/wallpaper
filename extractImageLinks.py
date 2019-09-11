@@ -42,7 +42,7 @@ def incrementCounter():
 
 def writeToFile(str): 
     lockForWrite.acquire()
-    f = open('list.txt', 'a+')
+    f = open('./resources/list.txt', 'a+')
     f.write(str + '\n')
     f.close()
     print('WRITE SUCCESSFUL \n' + str)
