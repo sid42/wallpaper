@@ -7,7 +7,6 @@ objectIDs = r.get(apiLink + 'objects').json()['objectIDs']
 dataCount = len(objectIDs)
 threadCount = 250
 split = int(dataCount/threadCount)
-paintingList = {}
 startIdx = 1
 c = 1
 lockForCounter = th.Lock()
@@ -61,7 +60,6 @@ def main():
         thread.join()
 
 def debug():
-    writeToFile(json.dumps(paintingList[123]))
     for i in range(10000000000):
         print(i)
     

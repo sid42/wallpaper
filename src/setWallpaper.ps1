@@ -1,9 +1,8 @@
-python .\updateWallpaper.py
+python .\src\updateWallpaper.py
 
 #---------------------------------------------------------------------------------# 
 
-$imagePath = 'C:\Program Files\wallpaper\resources\wallpaper.jpg'
-
+$imagePath = 'C:\Program Files\wallpaper\resources\wallpaper.png'
 $newImagePath = [System.IO.Path]::GetDirectoryName($imagePath) + '\' + (New-Guid).Guid + [System.IO.Path]::GetExtension($imagePath)
 Copy-Item $imagePath $newImagePath
 [Windows.System.UserProfile.LockScreen,Windows.System.UserProfile,ContentType=WindowsRuntime] | Out-Null
