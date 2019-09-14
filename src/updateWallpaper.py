@@ -2,10 +2,15 @@ import urllib.request
 import requests as re
 import random
 import json
+import logging
 from PIL import Image, ImageOps
 
 wallpaperPath = r'C:/Program Files/wallpaper/resources/' 
 api = 'https://collectionapi.metmuseum.org/public/collection/v1/'
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s — %(message)s',
+                    datefmt='%Y-%m-%d_%H:%M:%S',
+                    handlers=[logging.FileHandler('update.log', encoding='utf-8')])
 
 def downloadImage():
     with open('./resources/list.txt','r') as f:
@@ -37,9 +42,15 @@ def debug():
     urllib.request.urlretrieve('https://images.metmuseum.org/CRDImages/an/original/DT879.jpg', './resources/wallpaper.jpg')
 
 def main():
-    img = downloadImage()
-    setSpecifications()
-    setInfo(img['id'])
+    try:
+        img = downloadImage()
+        setSpecifications()
+        setInfo(img['id'])
+    except:
+        logging.error('Unable to update wallpaper')
+    finally: 
+        logging.info('Succesfully updated wallpaper')
+        print()
 
 if __name__ == "__main__":
     main() 
