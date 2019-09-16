@@ -46,11 +46,9 @@ def main():
         img = downloadImage()
         setSpecifications()
         setInfo(img['id'])
+        logging.info('Successfully updated wallpaper \n')
     except:
-        logging.error('Unable to update wallpaper')
-    finally: 
-        logging.info('Succesfully updated wallpaper')
-        print()
+        logging.error('Unable to update wallpaper \n')
 
 if __name__ == "__main__":
     main() 
