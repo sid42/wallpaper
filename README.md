@@ -6,13 +6,13 @@ Application to update the Windows lockscreen from a curated list of works of art
 ![imagelol](./resources/demo2.jpg)
 
 ### Features
- [x] Fits image to screen resolution.
- [x] Image extraction script is optimized to be as fast as possible.
- [x] Logs locksreen updates. 
- [x] Provides information relevant to the piece of art.
- [x] Allows scheduling as per user's needs.
- [x] Easy setup.
- [ ] Pull images from Instagram.
+- [x] Fits image to screen resolution.
+- [x] Image extraction script is optimized to be as fast as possible.
+- [x] Logs locksreen updates. 
+- [x] Provides information relevant to the piece of art.
+- [x] Allows scheduling as per user's needs.
+- [x] Easy setup.
+- [ ] Pull images from Instagram.
 
 ### Installation
 1. Run `pip3 install -r requirements.txt`
